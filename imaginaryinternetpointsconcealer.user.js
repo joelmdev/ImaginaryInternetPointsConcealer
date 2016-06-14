@@ -31,7 +31,7 @@
     }
 
     var now = new Date();
-    if (now.getHours >= 9 && now.getHours <= 17) {
+    if (now.getHours() >= 9 && now.getHours() <= 17) {
         console.log("it's between working hours");
         getNetworkItemsElement();
     }
