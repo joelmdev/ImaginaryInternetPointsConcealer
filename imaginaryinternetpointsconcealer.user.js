@@ -10,33 +10,64 @@
 // @grant       none
 // ==/UserScript==
 
-(function ($) {
-    console.log("starting to save you from yourself");
-    var getNetworkItemsElement = function() {
-        var networkItemsElement = $(".network-items");
-        if (networkItemsElement.length > 0) {
-            console.log("got the network-element");
-            $(networkItemsElement).find(".icon-achievements").removeClass("icon-achievements-unread");
-            $(networkItemsElement).find(".unread-count").hide();
-            if ($(networkItemsElement).find(".unread-count").length > 0) {
-                console.log("I blocked you from seeing your new imaginary points");
-            }
-            else {
-                console.log("you didn't have any new imaginary points");
-            }
-        }
-        else {
-            console.log("couldn't find the network-element");
-        }
-    }
 
-    var now = new Date();
-    if (now.getHours() >= 9 && now.getHours() <= 17) {
-        console.log("it's between working hours");
-        getNetworkItemsElement();
-    }
-    else {
-        console.log("it's not between working hours. Enjoy your imaginary internet points!");
-    }
+(function(jQuery)
+{
+    var $ = jQuery;
+    console.log("starting to save you from yourself");
+
+    var hideRepChanges = function()
+    {
+        var achievementsElement = $(".icon-achievements");
+
+        if (achievementsElement.hasClass("icon-achievements-unread"))
+        {
+            achievementsElement.removeClass("icon-achievements-unread");
+            achievementsElement.find(".unread-count").hide();
+
+            console.log("I blocked you from seeing your new imaginary points");
+        }
+        else
+        {
+            console.log("you didn't have any new imaginary points");
+        }
+    };
+
+    var fire = function()
+    {
+        var now = new Date();
+        if (now.getHours() >= 9 && now.getHours() <= 17)
+        {
+            console.log("it's between working hours");
+
+            hideRepChanges();
+        }
+        else
+        {
+            console.log("it's not between working hours. Enjoy your imaginary internet points!");
+        }
+    };
+
+    var attachObserver = function()
+    {
+        var observer = new MutationObserver(function(mutations) {
+            console.log("there was a change to the networkitemselement, attempting to hide rep changes");
+            fire();
+        });
+
+        var observerConfig = {
+            attributes: true,
+            childList: true,
+            characterData: false
+        };
+
+        observer.observe($(".icon-achievements")[0], observerConfig);
+        console.log("attached observer");
+    };
+
+    fire();
+    attachObserver();
+    setInterval(fire, 60000);
 })(unsafeWindow.jQuery);
+
 console.log("done");
