@@ -6,7 +6,7 @@
 // @include     /^https?://serverfault\.com.*$/
 // @include     /^https?://superuser\.com.*$/
 // @include     /^https?://.*\.stackexchange\.com.*$/
-// @version     0.1
+// @version     0.2
 // @grant       none
 // ==/UserScript==
 
