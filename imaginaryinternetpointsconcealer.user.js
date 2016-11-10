@@ -6,71 +6,42 @@
 // @include     /^https?://serverfault\.com.*$/
 // @include     /^https?://superuser\.com.*$/
 // @include     /^https?://.*\.stackexchange\.com.*$/
-// @version     0.2
+// @version     0.3
 // @grant       none
 // ==/UserScript==
 
 
-(function(jQuery)
+(function()
 {
     var startOfBusinessHour = 9;
     var closeOfBusinessHour = 17;
 
-    var $ = jQuery;
-    console.log("starting to save you from yourself");
+    var head = document.getElementsByTagName("head")[0];
 
-    var hideRepChanges = function()
-    {
-        var achievementsElement = $(".icon-achievements");
+    var style = document.createElement("style");
+    style.type = "text/css";
+    style.innerHTML = ".icon-achievements .unread-count{display:none !important;} .icon-achievements-unread{background-position:-220px -54px !important;}";
+    head.appendChild(style);
 
-        if (achievementsElement.hasClass("icon-achievements-unread"))
-        {
-            achievementsElement.removeClass("icon-achievements-unread");
-            achievementsElement.find(".unread-count").hide();
-
-            console.log("I blocked you from seeing your new imaginary points");
-        }
-        else
-        {
-            console.log("you didn't have any new imaginary points");
-        }
-    };
+    var hideCss = style.innerHTML;
 
     var fire = function()
     {
         var now = new Date();
-        if (now.getHours() >= startOfBusinessHour && now.getHours() <= closeOfBusinessHour)
+        if (now.getHours() >= startOfBusinessHour && now.getHours() <= closeOfBusinessHour && style.innerHTML !== hideCss)
         {
             console.log("it's between working hours");
-
-            hideRepChanges();
+            style.innerHTML = hideCss;
         }
-        else
+        else if ((now.getHours() <= startOfBusinessHour || now.getHours() >= closeOfBusinessHour) && style.innerHTML === hideCss)
         {
             console.log("it's not between working hours. Enjoy your imaginary internet points!");
+            style.innerHTML = '';
         }
-    };
-
-    var attachObserver = function()
-    {
-        var observer = new MutationObserver(function(mutations) {
-            console.log("there was a change to the networkitemselement, attempting to hide rep changes");
-            fire();
-        });
-
-        var observerConfig = {
-            attributes: true,
-            childList: true,
-            characterData: false
-        };
-
-        observer.observe($(".icon-achievements")[0], observerConfig);
-        console.log("attached observer");
     };
 
     fire();
-    attachObserver();
     setInterval(fire, 60000);
-})(unsafeWindow.jQuery);
+})();
 
 console.log("done");
