@@ -6,7 +6,7 @@
 // @include     /^https?://serverfault\.com.*$/
 // @include     /^https?://superuser\.com.*$/
 // @include     /^https?://.*\.stackexchange\.com.*$/
-// @version     0.3
+// @version     0.4
 // @downloadURL https://github.com/joelmdev/ImaginaryInternetPointsConcealer/raw/master/imaginaryinternetpointsconcealer.user.js
 // @grant       none
 // ==/UserScript==
@@ -21,7 +21,7 @@
 
     var style = document.createElement("style");
     style.type = "text/css";
-    style.innerHTML = ".icon-achievements .unread-count{display:none !important;} .icon-achievements-unread{background-position:-220px -54px !important;}";
+    style.innerHTML = '.indicator-badge.js-unread-count{display:none !important;}';
     head.appendChild(style);
 
     var hideCss = style.innerHTML;
