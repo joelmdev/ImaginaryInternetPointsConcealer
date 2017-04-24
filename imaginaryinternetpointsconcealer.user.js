@@ -6,7 +6,7 @@
 // @include     /^https?://serverfault\.com.*$/
 // @include     /^https?://superuser\.com.*$/
 // @include     /^https?://.*\.stackexchange\.com.*$/
-// @version     0.4
+// @version     0.5
 // @downloadURL https://github.com/joelmdev/ImaginaryInternetPointsConcealer/raw/master/imaginaryinternetpointsconcealer.user.js
 // @grant       none
 // ==/UserScript==
