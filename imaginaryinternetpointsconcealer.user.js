@@ -21,7 +21,7 @@
 
     var style = document.createElement("style");
     style.type = "text/css";
-    style.innerHTML = '.indicator-badge.js-unread-count{display:none !important;}';
+    style.innerHTML = '.indicator-badge.js-unread-count{display:none !important;} .-link.js-achievements-button._highlighted-positive {color:#848d95 !important}';
     head.appendChild(style);
 
     var hideCss = style.innerHTML;
